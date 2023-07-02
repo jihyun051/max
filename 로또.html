@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>LOTTERY MAX</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+      }
+      h1 {
+          color: navy;
+      }
+      section {
+          margin-bottom: 50px;
+      }
+      #section-about {
+          background-color: lightgrey;
+          padding: 30px;
+      }
+      #output-container {
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="section-intro">
+        <h1>LOTTERY MAX</h1>
+        <p>Customize your random lotto numbers generation.</p>
+        <label for="num_of_numbers">Number of Lotto Numbers:</label>
+        <input type="number" id="num_of_numbers" min="1" value="6">
+        <br><br>
+        <label for="min_range">Minimum Range:</label>
+        <input type="number" id="min_range" min="1" value="1">
+        <br><br>
+        <label for="max_range">Maximum Range:</label>
+        <input type="number" id="max_range" min="1" value="49">
+        <br><br>
+        <button id="generate-btn">Generate</button>
+        <div id="output-container"></div>
+    </section>
+    <section id="section-history">
+        <h2>History</h2>
+        <ul id="numbers-history"></ul>
+    </section>
+    <section id="section-about">
+        <h2>About</h2>
+        <p>LOTTERY MAX is a random lotto number generator. We strive to help you make the best choices and improve your chances of winning the lottery. Feel free to use our generator and share it with your friends!</p>
+    </section>
+
+    <script>
+      function generateLottoNumbers(numOfNumbers, minRange, maxRange) {
+        var numbers = [];
+
+        while (numbers.length < numOfNumbers) {
+          var randomNum = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
+          if (numbers.indexOf(randomNum) === -1) {
+            numbers.push(randomNum);
+          }
+        }
+
+        return numbers;
+      }
+
+      function addToHistory(numbers) {
+        var historyItem = document.createElement("li");
+        historyItem.textContent = "Lotto Numbers: " + numbers.join(", ");
+        document.getElementById("numbers-history").appendChild(historyItem);
+      }
+
+      document.getElementById("generate-btn").addEventListener("click", function() {
+        var numOfNumbers = parseInt(document.getElementById("num_of_numbers").value);
+        var minRange = parseInt(document.getElementById("min_range").value);
+        var maxRange = parseInt(document.getElementById("max_range").value);
+
+        var lottoNumbers = generateLottoNumbers(numOfNumbers, minRange, maxRange);
+        var output = "Lotto Numbers: " + lottoNumbers.join(", ");
+        document.getElementById("output-container").textContent = output;
+
+        addToHistory(lottoNumbers);
+      });
+    </script>
+  </body>
+</html>
